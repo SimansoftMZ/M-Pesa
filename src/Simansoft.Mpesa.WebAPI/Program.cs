@@ -1,6 +1,4 @@
-using Simansoft.Mpesa.Core.Interfaces.Seguranca;
 using Simansoft.Mpesa.Core.Models.Seguranca;
-using System.Text.Json;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateSlimBuilder(args);
