@@ -7,5 +7,13 @@ Accept: application/json
 
 GET {{Simansoft.Mpesa.WebAPI_HostAddress}}/todos/1
 Accept: application/json
+###
+POST {{Simansoft.Mpesa.WebAPI_HostAddress}}/seguranca/provedor/iniciar-sessao
+Content-Type: application/json
+
+{
+  "apiKey": {{MpesaApiKeyDev}},
+  "publicKey": {{MpesaPublicKeyDev}}
+}
 
 ###

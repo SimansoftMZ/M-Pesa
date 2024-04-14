@@ -8,10 +8,24 @@
     <PublishAot>true</PublishAot>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..</DockerfileContext>
+    <UserSecretsId>59dd0221-f3e1-4971-8041-70a29e2421f3</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
+    <_ContentIncludedByDefault Remove="http-client.env.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="http-client.env.json.user" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.20.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Simansoft.Mpesa.Core\Simansoft.Mpesa.Core.csproj" />
   </ItemGroup>
 
 </Project>
