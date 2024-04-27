@@ -8,8 +8,8 @@ POST {{Simansoft.Mpesa.WebAPI_HostAddress}}/seguranca/provedor/iniciar-sessao
 Content-Type: application/json
 
 {
-  "apiKey": "{{MpesaApiKeyDev}}",
-  "publicKey": "{{MpesaPublicKeyDev}}"
+    "apiKey": "{{MpesaApiKeyDev}}",
+    "publicKey": "{{MpesaPublicKeyDev}}"
 }
 
 ###
