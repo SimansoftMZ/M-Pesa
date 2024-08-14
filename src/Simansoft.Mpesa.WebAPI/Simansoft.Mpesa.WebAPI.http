@@ -1,15 +1,8 @@
-@Simansoft.Mpesa.WebAPI_HostAddress = http://localhost:5106
-
-GET {{Simansoft.Mpesa.WebAPI_HostAddress}}/todos/
-Accept: application/json
-
 ###
 POST {{MpesaHostAddress}}/seguranca/provedor/iniciar-sessao
 Content-Type: application/json
-
 {
     "apiKey": "{{MpesaApiKeyDev}}",
     "publicKey": "{{MpesaPublicKeyDev}}"
 }
-
 ###
