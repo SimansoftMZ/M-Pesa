@@ -4,7 +4,7 @@ GET {{Simansoft.Mpesa.WebAPI_HostAddress}}/todos/
 Accept: application/json
 
 ###
-POST {{Simansoft.Mpesa.WebAPI_HostAddress}}/seguranca/provedor/iniciar-sessao
+POST {{MpesaHostAddress}}/seguranca/provedor/iniciar-sessao
 Content-Type: application/json
 
 {
