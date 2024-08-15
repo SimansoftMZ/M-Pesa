@@ -5,8 +5,9 @@
         public string ChaveAPI { get; set; }
         public string ChavePublica { get; set; }
 
-        public void GerarApiKey(int length);
-        public void GerarPublicKey(out string privateKey);
         public string IniciarSessao();
+        public bool EStringBase64(string base64String);
+        public void GerarApiKey(int length);
+        public void GerarPublicKey(out string privateKey);        
     }
 }

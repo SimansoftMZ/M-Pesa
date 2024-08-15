@@ -15,6 +15,12 @@ namespace Simansoft.Mpesa.Core.Models.Seguranca
 
         public string IniciarSessao()
         {
+            if (string.IsNullOrWhiteSpace(ChaveAPI) || string.IsNullOrWhiteSpace(ChavePublica)
+                || !EStringBase64(ChaveAPI) || !EStringBase64(ChavePublica))
+            {
+                return string.Empty;
+            }
+
             byte[] publicKeyBytes = Convert.FromBase64String(ChavePublica);
 
             using RSACryptoServiceProvider rsa = new();
@@ -23,6 +29,12 @@ namespace Simansoft.Mpesa.Core.Models.Seguranca
             string token = Convert.ToBase64String(encryptedApiKey);
 
             return token;
+        }
+
+        public bool EStringBase64(string base64String)
+        {
+            Span<byte> buffer = new(new byte[base64String.Length]);
+            return Convert.TryFromBase64String(base64String, buffer, out int _);
         }
 
         public void GerarApiKey(int length = 32)
