@@ -10,7 +10,6 @@ namespace Simansoft.Mpesa.Core.Models.Seguranca
     {
         public ProvedorInicioSessaoModel() : this(string.Empty, string.Empty) { }
 
-
         [ObservableProperty] private string _chaveAPI = chaveAPI;
         [ObservableProperty] private string _chavePublica = chavePublica;
 
