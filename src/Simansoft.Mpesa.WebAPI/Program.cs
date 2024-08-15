@@ -17,7 +17,7 @@ segurancaApi.MapPost("/iniciar-sessao", async (HttpRequest request) =>
 
     string token = body!.IniciarSessao();
 
-    return !string.IsNullOrWhiteSpace(token) ? Results.Ok(token) : Results.NotFound();
+    return !string.IsNullOrWhiteSpace(token) ? Results.Ok(token) : Results.Unauthorized();
 });
 
 app.Run();
