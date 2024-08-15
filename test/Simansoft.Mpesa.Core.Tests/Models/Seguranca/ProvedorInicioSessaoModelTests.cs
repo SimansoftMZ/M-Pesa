@@ -1,6 +1,4 @@
-﻿using Simansoft.Mpesa.Core.Interfaces.Seguranca;
-using Simansoft.Mpesa.Core.Models.Seguranca;
-using System.Security.Cryptography;
+﻿using Simansoft.Mpesa.Core.Models.Seguranca;
 
 namespace Simansoft.Mpesa.Core.Tests.Models.Seguranca
 {
@@ -8,14 +6,12 @@ namespace Simansoft.Mpesa.Core.Tests.Models.Seguranca
     public class ProvedorInicioSessaoModelTests
     {
         [TestMethod]
-        public void IniciarSessao_ShouldEncryptApiKeyAndReturnToken()
+        public void IniciarSessao_DeveRetornarOToken()
         {
-            // Arrange
-            IProvedorInicioSessao inicioSessao = new ProvedorInicioSessaoModel();
-
+            ProvedorInicioSessaoModel inicioSessao = new();
             inicioSessao.GerarApiKey(22);
             inicioSessao.GerarPublicKey(out _);            
-            // Act
+            
             string token = inicioSessao.IniciarSessao();
 
             // Assert
