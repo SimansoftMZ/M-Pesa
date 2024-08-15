@@ -6,6 +6,17 @@ namespace Simansoft.Mpesa.Core.Tests.Models.Seguranca
     public class ProvedorInicioSessaoModelTests
     {
         [TestMethod]
+        public void IniciarSessao_SeAsCredenciaisEstiveremVaziasDeveRetornarOTokenVazio()
+        {
+            ProvedorInicioSessaoModel inicioSessao = new();
+
+            string token = inicioSessao.IniciarSessao();
+
+            // Assert
+            Assert.AreEqual(string.Empty, token);
+        }
+
+        [TestMethod]
         public void IniciarSessao_DeveRetornarOTokenPreenchido()
         {
             ProvedorInicioSessaoModel inicioSessao = new();
@@ -18,17 +29,6 @@ namespace Simansoft.Mpesa.Core.Tests.Models.Seguranca
             Assert.IsNotNull(token);
             Assert.AreNotEqual(string.Empty, token);
             Assert.IsTrue(inicioSessao.EStringBase64(token));
-        }
-
-        [TestMethod]
-        public void IniciarSessao_DeveRetornarOTokenVazio()
-        {
-            ProvedorInicioSessaoModel inicioSessao = new();
-
-            string token = inicioSessao.IniciarSessao();
-
-            // Assert
-            Assert.AreEqual(string.Empty, token);
         }
     }
 }
