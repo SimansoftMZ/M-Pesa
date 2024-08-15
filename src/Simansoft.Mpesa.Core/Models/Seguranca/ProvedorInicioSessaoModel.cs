@@ -2,7 +2,6 @@
 using Simansoft.Mpesa.Core.Interfaces.Seguranca;
 using Simansoft.Mpesa.Core.Models.Bases;
 using System.Security.Cryptography;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace Simansoft.Mpesa.Core.Models.Seguranca
@@ -23,6 +22,7 @@ namespace Simansoft.Mpesa.Core.Models.Seguranca
             rsa.ImportSubjectPublicKeyInfo(publicKeyBytes, out _);
             byte[] encryptedApiKey = rsa.Encrypt(Encoding.UTF8.GetBytes(ChaveAPI), false);
             string token = Convert.ToBase64String(encryptedApiKey);
+
             return token;
         }
 
