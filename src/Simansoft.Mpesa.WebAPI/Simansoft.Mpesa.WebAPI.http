@@ -2,7 +2,7 @@
 POST {{MpesaHostAddress}}/seguranca/provedor/iniciar-sessao
 Content-Type: application/json
 {
-    "apiKey": "{{MpesaApiKeyDev}}",
-    "publicKey": "{{MpesaPublicKeyDev}}"
+    "chaveAPI": "{{MpesaApiKeyDev}}",
+    "chavePublica": "{{MpesaPublicKeyDev}}"
 }
 ###
