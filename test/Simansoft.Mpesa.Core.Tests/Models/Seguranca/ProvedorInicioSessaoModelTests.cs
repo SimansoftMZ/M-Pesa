@@ -16,7 +16,7 @@ namespace Simansoft.Mpesa.Core.Tests.Models.Seguranca
 
             // Assert
             Assert.IsNotNull(token);
-            //Assert.IsNotEmpty(token);
+            Assert.AreNotEqual(string.Empty, token);
         }
     }
 }
