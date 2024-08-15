@@ -18,24 +18,11 @@ namespace Simansoft.Mpesa.Core.Models.Seguranca
         public string IniciarSessao()
         {
             byte[] publicKeyBytes = Convert.FromBase64String(ChavePublica);
-            RSACryptoServiceProvider rsa = new();
-            rsa.ImportSubjectPublicKeyInfo(publicKeyBytes, out _);
 
+            using RSACryptoServiceProvider rsa = new();
+            rsa.ImportSubjectPublicKeyInfo(publicKeyBytes, out _);
             byte[] encryptedApiKey = rsa.Encrypt(Encoding.UTF8.GetBytes(ChaveAPI), false);
             string token = Convert.ToBase64String(encryptedApiKey);
-
-
-            //Sugestão a ser testada
-
-            //using (RSACryptoServiceProvider rsa = new())
-            //{
-            //    rsa.ImportSubjectPublicKeyInfo(publicKeyBytes, out _);
-            //    byte[] encryptedApiKey = rsa.Encrypt(Encoding.UTF8.GetBytes(ApiKey), false);
-            //    string token = Convert.ToBase64String(encryptedApiKey);
-            //    return token;
-            //}
-
-
             return token;
         }
 
