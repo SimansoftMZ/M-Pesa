@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Simansoft.Mpesa.Core.Interfaces.Seguranca;
-using Simansoft.Mpesa.Core.Models.Bases;
+using Simansoft.Mpesa.Core.Models.Locais.Bases;
 using System.Security.Cryptography;
 using System.Text;
 

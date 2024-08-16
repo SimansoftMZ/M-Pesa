@@ -29,7 +29,7 @@ namespace Simansoft.Mpesa.WebAPI.Tests.Controllers
             Assert.AreEqual(System.Net.HttpStatusCode.Unauthorized, response.StatusCode);
 
             // Arrange
-            //// Credenciais com base 64 inválida
+            //// Credenciais com Base64 inválida
             inicioSessao.GerarStringAleatoria();
             inicioSessao.GerarPublicKey(out _);
 
