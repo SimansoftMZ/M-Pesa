@@ -1,17 +1,6 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.AspNetCore.TestHost;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
-using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.Mvc.Testing;
 using Simansoft.Mpesa.Core.Models.Seguranca;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http.Json;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Simansoft.Mpesa.WebAPI.Tests.Controllers
 {
@@ -23,12 +12,39 @@ namespace Simansoft.Mpesa.WebAPI.Tests.Controllers
         [TestInitialize]
         public void Initialize()
         {
-            // Cria um cliente HTTP para enviar requisições ao servidor simulado
             _client = this.CreateClient();
         }
 
         [TestMethod]
-        public async Task IniciarSessao_ReturnaToken_QuandoRequestValido()
+        public async Task IniciarSessao_SeAsCredenciaisEstiveremVaziasRetornaNaoAutorizado()
+        {
+            // Arrange
+            ProvedorInicioSessaoModel inicioSessao = new();
+
+            // Act
+            HttpResponseMessage? response = await _client.PostAsJsonAsync("/seguranca/provedor/iniciar-sessao", inicioSessao).ConfigureAwait(true);
+
+            // Assert
+            Assert.AreEqual(System.Net.HttpStatusCode.Unauthorized, response.StatusCode);
+        }
+
+        [TestMethod]
+        public async Task IniciarSessao_SeAsCredenciaisNaoForemBase64RetornaNaoAutorizado()
+        {
+            // Arrange
+            ProvedorInicioSessaoModel inicioSessao = new();
+            inicioSessao.GerarStringAleatoria();
+            inicioSessao.GerarPublicKey(out _);
+
+            // Act
+            HttpResponseMessage? response = await _client.PostAsJsonAsync("/seguranca/provedor/iniciar-sessao", inicioSessao).ConfigureAwait(true);
+
+            // Assert
+            Assert.AreEqual(System.Net.HttpStatusCode.Unauthorized, response.StatusCode);
+        }
+
+        [TestMethod]
+        public async Task IniciarSessao_DeveRetornarOTokenPreenchido()
         {
             // Arrange
             ProvedorInicioSessaoModel inicioSessao = new();

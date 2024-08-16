@@ -37,9 +37,9 @@ namespace Simansoft.Mpesa.Core.Models.Seguranca
             return Convert.TryFromBase64String(base64String, buffer, out int _);
         }
 
-        public void GerarApiKey(int length = 32)
+        public void GerarApiKey(int tamanho = 32)
         {
-            byte[] apiKeyBytes = new byte[length];
+            byte[] apiKeyBytes = new byte[tamanho];
             RandomNumberGenerator.Fill(apiKeyBytes);
             ChaveAPI = Convert.ToBase64String(apiKeyBytes);
         }
@@ -55,6 +55,20 @@ namespace Simansoft.Mpesa.Core.Models.Seguranca
             privateKey = Convert.ToBase64String(privateKeyBytes);
 
             ChavePublica = chavePublicaTmp;
+        }
+
+        public void GerarStringAleatoria(int tamanho = 16)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[]{}|;:',.<>?";
+            var random = new Random();
+            var result = new StringBuilder(tamanho);
+
+            for (int i = 0; i < tamanho; i++)
+            {
+                result.Append(chars[random.Next(chars.Length)]);
+            }
+
+            ChaveAPI = result.ToString();
         }
     }
 }

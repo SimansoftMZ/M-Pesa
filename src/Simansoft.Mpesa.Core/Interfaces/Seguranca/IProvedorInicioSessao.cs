@@ -7,7 +7,8 @@
 
         public string IniciarSessao();
         public bool EStringBase64(string base64String);
-        public void GerarApiKey(int length);
-        public void GerarPublicKey(out string privateKey);        
+        public void GerarApiKey(int tamanho);
+        public void GerarPublicKey(out string privateKey);
+        public void GerarStringAleatoria(int tamanho);
     }
 }
