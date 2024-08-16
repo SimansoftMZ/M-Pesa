@@ -1,29 +1,44 @@
 using Simansoft.Mpesa.Core.Models.Seguranca;
 using System.Text.Json.Serialization;
 
-var builder = WebApplication.CreateSlimBuilder(args);
-
-builder.Services.ConfigureHttpJsonOptions(options =>
+namespace Simansoft.Mpesa.WebAPI
 {
-    options.SerializerOptions.TypeInfoResolverChain.Insert(0, AppInicioSessaoContext.Default);
-});
+    public class Program
+    {
+        static void Main(string[] args)
+        {
+            var builder = WebApplication.CreateSlimBuilder(args);
 
-var app = builder.Build();
+            builder.Services.ConfigureHttpJsonOptions(options =>
+            {
+                options.SerializerOptions.TypeInfoResolverChain.Insert(0, AppInicioSessaoContext.Default);
+            });
 
-var segurancaApi = app.MapGroup("/seguranca/provedor");
-segurancaApi.MapPost("/iniciar-sessao", async (HttpRequest request) =>
-{
-    var body = await request.ReadFromJsonAsync<ProvedorInicioSessaoModel>();
+            var app = builder.Build();
 
-    string token = body!.IniciarSessao();
+            var segurancaApi = app.MapGroup("/seguranca/provedor");
+            segurancaApi.MapPost("/iniciar-sessao", async (HttpRequest request) =>
+            {
+                var body = await request.ReadFromJsonAsync<ProvedorInicioSessaoModel>().ConfigureAwait(true);
 
-    return !string.IsNullOrWhiteSpace(token) ? Results.Ok(token) : Results.Unauthorized();
-});
+                if (body == null)
+                {
+                    return Results.BadRequest("Modelo vazio!");
+                }   
 
-app.Run();
+                string token = body.IniciarSessao();
 
-[JsonSerializable(typeof(ProvedorInicioSessaoModel))]
-internal partial class AppInicioSessaoContext : JsonSerializerContext
-{
+                return !string.IsNullOrWhiteSpace(token) ? Results.Ok(token) : Results.Unauthorized();
+            });
 
+            app.Run();
+        }
+
+    }
+
+    [JsonSerializable(typeof(ProvedorInicioSessaoModel))]
+    internal partial class AppInicioSessaoContext : JsonSerializerContext
+    {
+
+    }
 }

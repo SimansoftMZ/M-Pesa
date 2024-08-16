@@ -8,8 +8,10 @@ namespace Simansoft.Mpesa.Core.Tests.Models.Seguranca
         [TestMethod]
         public void IniciarSessao_SeAsCredenciaisEstiveremVaziasDeveRetornarOTokenVazio()
         {
+            // Arrange
             ProvedorInicioSessaoModel inicioSessao = new();
 
+            // Act
             string token = inicioSessao.IniciarSessao();
 
             // Assert
@@ -19,15 +21,16 @@ namespace Simansoft.Mpesa.Core.Tests.Models.Seguranca
         [TestMethod]
         public void IniciarSessao_DeveRetornarOTokenPreenchido()
         {
+            // Arrange
             ProvedorInicioSessaoModel inicioSessao = new();
             inicioSessao.GerarApiKey(22);
-            inicioSessao.GerarPublicKey(out _);            
-            
-            string token = inicioSessao.IniciarSessao();            
+            inicioSessao.GerarPublicKey(out _);
+
+            // Act
+            string token = inicioSessao.IniciarSessao();
 
             // Assert
-            Assert.IsNotNull(token);
-            Assert.AreNotEqual(string.Empty, token);
+            Assert.IsFalse(string.IsNullOrWhiteSpace(token));
             Assert.IsTrue(inicioSessao.EStringBase64(token));
         }
     }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.VisualStudio.TestPlatform.TestHost;
 using Newtonsoft.Json;
@@ -15,53 +16,37 @@ using System.Threading.Tasks;
 namespace Simansoft.Mpesa.WebAPI.Tests.Controllers
 {
     [TestClass]
-    public class SegurancaControllerTests
+    public class SegurancaControllerTests : WebApplicationFactory<Program>
     {
-        private readonly TestServer _server;
-        private readonly HttpClient _client;
+        private HttpClient _client = new();
 
-        //public SegurancaControllerTests()
-        //{
-        //    _server = new TestServer(new WebHostBuilder().UseStartup<Startup>());
-        //    _client = _server.CreateClient();
-        //}
+        [TestInitialize]
+        public void Initialize()
+        {
+            // Cria um cliente HTTP para enviar requisições ao servidor simulado
+            _client = this.CreateClient();
+        }
 
-        //[TestMethod]
-        //public async Task IniciarSessao_Endpoint_ReturnsOkResult()
-        //{
-        //    // Arrange
-        //    var model = new ProvedorInicioSessaoModel
-        //    {
-        //        // Set the properties of the model as needed for the test
-        //    };
-        //    var json = JsonConvert.SerializeObject(model);
-        //    var content = new StringContent(json, Encoding.UTF8, "application/json");
+        [TestMethod]
+        public async Task IniciarSessao_ReturnaToken_QuandoRequestValido()
+        {
+            // Arrange
+            ProvedorInicioSessaoModel inicioSessao = new();
+            inicioSessao.GerarApiKey(22);
+            inicioSessao.GerarPublicKey(out _);
 
-        //    // Act
-        //    var response = await _client.PostAsJsonAsync("/seguranca/provedor/iniciar-sessao", model);
+            // Act
+            HttpResponseMessage? response = await _client.PostAsJsonAsync("/seguranca/provedor/iniciar-sessao", inicioSessao).ConfigureAwait(true);
 
-        //    // Assert
-        //    response.EnsureSuccessStatusCode();
-        //    var responseContent = await response.Content.ReadAsStringAsync();
-        //    var token = JsonConvert.DeserializeObject<string>(responseContent);
-        //    Assert.NotNull(token);
-        //}
+            // Assert
+            Assert.AreEqual(System.Net.HttpStatusCode.OK, response.StatusCode);
 
-        //[TestMethod]
-        //public async Task IniciarSessao()
-        //{
-        //    // Arrange
-        //    var request = new DefaultHttpContext().Request;
-        //    var body = new ProvedorInicioSessaoModel();
-        //    var expectedToken = "token";
+            // Act
+            string token = (await response.Content.ReadAsStringAsync().ConfigureAwait(true)).Trim('\"');
 
-        //    // Act
-        //    var result = await Simansoft.Mpesa.WebAPI. Program.IniciarSessao(request, body);
-
-        //    // Assert
-        //    Assert.IsType<OkObjectResult>(result);
-        //    var okResult = (OkObjectResult)result;
-        //    Assert.Equal(expectedToken, okResult.Value);
-        //}
+            // Assert
+            Assert.IsFalse(string.IsNullOrWhiteSpace(token));
+            Assert.IsTrue(inicioSessao.EStringBase64(token));
+        }
     }
 }
