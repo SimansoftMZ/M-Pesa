@@ -19,6 +19,21 @@ namespace Simansoft.Mpesa.Core.Tests.Models.Seguranca
         }
 
         [TestMethod]
+        public void IniciarSessao_SeAsCredenciaisNaoForemBase64RetornaNaoAutorizado()
+        {
+            // Arrange
+            ProvedorInicioSessaoModel inicioSessao = new();
+            inicioSessao.GerarStringAleatoria();
+            inicioSessao.GerarPublicKey(out _);
+
+            // Act
+            string token = inicioSessao.IniciarSessao();
+
+            // Assert
+            Assert.AreEqual(string.Empty, token);
+        }
+
+        [TestMethod]
         public void IniciarSessao_DeveRetornarOTokenPreenchido()
         {
             // Arrange

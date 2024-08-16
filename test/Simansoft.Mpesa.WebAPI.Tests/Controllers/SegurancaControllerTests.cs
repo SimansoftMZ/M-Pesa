@@ -16,35 +16,32 @@ namespace Simansoft.Mpesa.WebAPI.Tests.Controllers
         }
 
         [TestMethod]
-        public async Task IniciarSessao_SeAsCredenciaisEstiveremVaziasRetornaNaoAutorizado()
+        public async Task IniciarSessao_CredenciaisInvalidasRetornaNaoAutorizadoAsync()
         {
             // Arrange
+            //// Credenciais vazias
             ProvedorInicioSessaoModel inicioSessao = new();
-
+            
             // Act
             HttpResponseMessage? response = await _client.PostAsJsonAsync("/seguranca/provedor/iniciar-sessao", inicioSessao).ConfigureAwait(true);
 
             // Assert
             Assert.AreEqual(System.Net.HttpStatusCode.Unauthorized, response.StatusCode);
-        }
 
-        [TestMethod]
-        public async Task IniciarSessao_SeAsCredenciaisNaoForemBase64RetornaNaoAutorizado()
-        {
             // Arrange
-            ProvedorInicioSessaoModel inicioSessao = new();
+            //// Credenciais com base 64 inválida
             inicioSessao.GerarStringAleatoria();
             inicioSessao.GerarPublicKey(out _);
 
             // Act
-            HttpResponseMessage? response = await _client.PostAsJsonAsync("/seguranca/provedor/iniciar-sessao", inicioSessao).ConfigureAwait(true);
+            response = await _client.PostAsJsonAsync("/seguranca/provedor/iniciar-sessao", inicioSessao).ConfigureAwait(true);
 
             // Assert
             Assert.AreEqual(System.Net.HttpStatusCode.Unauthorized, response.StatusCode);
         }
 
         [TestMethod]
-        public async Task IniciarSessao_DeveRetornarOTokenPreenchido()
+        public async Task IniciarSessao_DeveRetornarOTokenPreenchidoAsync()
         {
             // Arrange
             ProvedorInicioSessaoModel inicioSessao = new();
