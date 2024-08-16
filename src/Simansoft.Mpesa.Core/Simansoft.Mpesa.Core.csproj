@@ -14,4 +14,19 @@
     <Folder Include="Models\Locais\Genericos\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Resources\CodigosResposta.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CodigosResposta.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\CodigosResposta.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>CodigosResposta.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>
