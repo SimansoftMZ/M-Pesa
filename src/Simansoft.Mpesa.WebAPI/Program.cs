@@ -5,6 +5,9 @@ namespace Simansoft.Mpesa.WebAPI
 {
     public class Program
     {
+        const string BASE_API = "/api";
+        const string VERSAO_API = "v1";
+
         static void Main(string[] args)
         {
             var builder = WebApplication.CreateSlimBuilder(args);
@@ -15,8 +18,8 @@ namespace Simansoft.Mpesa.WebAPI
             });
 
             var app = builder.Build();
-
-            var segurancaApi = app.MapGroup("/seguranca/provedor");
+            
+            var segurancaApi = app.MapGroup($"{BASE_API}/{VERSAO_API}/seguranca/provedor");
             segurancaApi.MapPost("/iniciar-sessao", async (HttpRequest request) =>
             {
                 var body = await request.ReadFromJsonAsync<ProvedorInicioSessaoModel>().ConfigureAwait(true);
@@ -29,7 +32,7 @@ namespace Simansoft.Mpesa.WebAPI
                 string token = body.IniciarSessao();
 
                 return !string.IsNullOrWhiteSpace(token) ? Results.Ok(token) : Results.Unauthorized();
-            });
+            }).WithTags("v1");
 
             app.Run();
         }

@@ -8,6 +8,8 @@ namespace Simansoft.Mpesa.WebAPI.Tests.Controllers
     public class SegurancaControllerTests : WebApplicationFactory<Program>
     {
         private HttpClient _client = new();
+        const string BASE_API = "/api";
+        const string VERSAO_API = "v1";
 
         [TestInitialize]
         public void Initialize()
@@ -23,7 +25,7 @@ namespace Simansoft.Mpesa.WebAPI.Tests.Controllers
             ProvedorInicioSessaoModel inicioSessao = new();
             
             // Act
-            HttpResponseMessage? response = await _client.PostAsJsonAsync("/seguranca/provedor/iniciar-sessao", inicioSessao).ConfigureAwait(true);
+            HttpResponseMessage? response = await _client.PostAsJsonAsync($"{BASE_API}/{VERSAO_API}/seguranca/provedor/iniciar-sessao", inicioSessao).ConfigureAwait(true);
 
             // Assert
             Assert.AreEqual(System.Net.HttpStatusCode.Unauthorized, response.StatusCode);
@@ -34,7 +36,7 @@ namespace Simansoft.Mpesa.WebAPI.Tests.Controllers
             inicioSessao.GerarPublicKey(out _);
 
             // Act
-            response = await _client.PostAsJsonAsync("/seguranca/provedor/iniciar-sessao", inicioSessao).ConfigureAwait(true);
+            response = await _client.PostAsJsonAsync($"{BASE_API}/{VERSAO_API}/seguranca/provedor/iniciar-sessao", inicioSessao).ConfigureAwait(true);
 
             // Assert
             Assert.AreEqual(System.Net.HttpStatusCode.Unauthorized, response.StatusCode);
@@ -49,7 +51,7 @@ namespace Simansoft.Mpesa.WebAPI.Tests.Controllers
             inicioSessao.GerarPublicKey(out _);
 
             // Act
-            HttpResponseMessage? response = await _client.PostAsJsonAsync("/seguranca/provedor/iniciar-sessao", inicioSessao).ConfigureAwait(true);
+            HttpResponseMessage? response = await _client.PostAsJsonAsync($"{BASE_API}/{VERSAO_API}/seguranca/provedor/iniciar-sessao", inicioSessao).ConfigureAwait(true);
 
             // Assert
             Assert.AreEqual(System.Net.HttpStatusCode.OK, response.StatusCode);
