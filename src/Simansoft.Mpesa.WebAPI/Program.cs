@@ -20,7 +20,7 @@ namespace Simansoft.Mpesa.WebAPI
             var app = builder.Build();
 
             var segurancaApi = app.MapGroup($"api/v{VERSAO_ACTUAL_API}/seguranca/provedor");
-            segurancaApi.MapPost("/iniciar-sessao", async (HttpRequest request) =>
+            segurancaApi.MapPost("/iniciar-sessao", static async (HttpRequest request) =>
             {
                 var body = await request.ReadFromJsonAsync<ProvedorInicioSessaoModel>().ConfigureAwait(true);
 
