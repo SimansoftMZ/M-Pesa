@@ -1,12 +1,12 @@
 using Simansoft.Mpesa.Core.Models.Seguranca;
+using System;
 using System.Text.Json.Serialization;
 
 namespace Simansoft.Mpesa.WebAPI
 {
     public class Program
     {
-        const string BASE_API = "/api";
-        const string VERSAO_API = "v1";
+        const string VERSAO_ACTUAL_API = "1";
 
         static void Main(string[] args)
         {
@@ -14,12 +14,12 @@ namespace Simansoft.Mpesa.WebAPI
 
             builder.Services.ConfigureHttpJsonOptions(options =>
             {
-                options.SerializerOptions.TypeInfoResolverChain.Insert(0, AppInicioSessaoContext.Default);
+                options.SerializerOptions.TypeInfoResolverChain.Insert(0, AppInicioSessaoContext.Default);                
             });
 
             var app = builder.Build();
-            
-            var segurancaApi = app.MapGroup($"{BASE_API}/{VERSAO_API}/seguranca/provedor");
+
+            var segurancaApi = app.MapGroup($"api/v{VERSAO_ACTUAL_API}/seguranca/provedor");
             segurancaApi.MapPost("/iniciar-sessao", async (HttpRequest request) =>
             {
                 var body = await request.ReadFromJsonAsync<ProvedorInicioSessaoModel>().ConfigureAwait(true);
@@ -27,16 +27,15 @@ namespace Simansoft.Mpesa.WebAPI
                 if (body == null)
                 {
                     return Results.BadRequest("Modelo vazio!");
-                }   
+                }
 
                 string token = body.IniciarSessao();
 
                 return !string.IsNullOrWhiteSpace(token) ? Results.Ok(token) : Results.Unauthorized();
-            }).WithTags("v1");
+            });
 
             app.Run();
         }
-
     }
 
     [JsonSerializable(typeof(ProvedorInicioSessaoModel))]
