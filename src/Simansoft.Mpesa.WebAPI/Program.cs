@@ -1,5 +1,4 @@
 using Simansoft.Mpesa.Core.Models.Seguranca;
-using System;
 using System.Text.Json.Serialization;
 
 namespace Simansoft.Mpesa.WebAPI
