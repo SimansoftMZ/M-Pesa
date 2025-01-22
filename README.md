@@ -4,9 +4,9 @@
 
 ## Funcionalidades
 - [x] Autenticação com M-pesa
-- [x] Consulta de saldo
-- [x] Envio de dinheiro
-- [x] Recebimento de dinheiro
+- [ ] Consulta de saldo
+- [ ] Envio de dinheiro
+- [ ] Recebimento de dinheiro
 - [ ] Notificações em tempo real
 
 ## Pré-requisitos
